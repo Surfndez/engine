@@ -34,6 +34,8 @@ class EmbedderTestContext {
 
   const std::string& GetAssetsPath() const;
 
+  const std::string& GetSnapshotPath() const;
+
   const fml::Mapping* GetVMSnapshotData() const;
 
   const fml::Mapping* GetVMSnapshotInstructions() const;
@@ -70,10 +72,7 @@ class EmbedderTestContext {
   friend class EmbedderConfigBuilder;
 
   std::string assets_path_;
-  std::unique_ptr<fml::Mapping> vm_snapshot_data_;
-  std::unique_ptr<fml::Mapping> vm_snapshot_instructions_;
-  std::unique_ptr<fml::Mapping> isolate_snapshot_data_;
-  std::unique_ptr<fml::Mapping> isolate_snapshot_instructions_;
+  std::string snapshot_path_;
   std::vector<fml::closure> isolate_create_callbacks_;
   std::shared_ptr<TestDartNativeResolver> native_resolver_;
   SemanticsNodeCallback update_semantics_node_callback_;

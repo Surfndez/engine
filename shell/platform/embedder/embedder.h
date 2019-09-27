@@ -810,37 +810,70 @@ typedef struct {
   /// callback will be invoked on the thread on which the `FlutterEngineRun`
   /// call is made.
   FlutterPlatformMessageCallback platform_message_callback;
+  /// The VM snapshot file used in AOT operation.
+  ///
+  /// Platforms that ELF objects natively (Linux, Android, Fuchsia):
+  ///   - This path will be resolved by the dynamic linker and must point to a
+  ///     snapshot in ELF format.
+  ///
+  /// Platforms that support Mach-O objects natively (MacOS, iOS, etc.):
+  ///   - This path will be resolved by the dynamic linker and may point to a
+  ///     snapshot in Mach-O format.
+  ///   - If the dynamic linker cannot load the path, it may point to an ELF
+  ///     object. In this case the dynamic linker's path is not used and the
+  ///     file's path is resolved against the current working directory.
+  ///
+  /// Other platforms:
+  ///   - The path will be resolved against the current working directory and
+  ///     must point to a snapshot in ELF format.
+  const char* snapshot_path;
   /// The VM snapshot data buffer used in AOT operation. This buffer must be
   /// mapped in as read-only. For more information refer to the documentation on
   /// the Wiki at
   /// https://github.com/flutter/flutter/wiki/Flutter-engine-operation-in-AOT-Mode
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   const uint8_t* vm_snapshot_data;
   /// The size of the VM snapshot data buffer.  If vm_snapshot_data is a symbol
   /// reference, 0 may be passed here.
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   size_t vm_snapshot_data_size;
   /// The VM snapshot instructions buffer used in AOT operation. This buffer
   /// must be mapped in as read-execute. For more information refer to the
   /// documentation on the Wiki at
   /// https://github.com/flutter/flutter/wiki/Flutter-engine-operation-in-AOT-Mode
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   const uint8_t* vm_snapshot_instructions;
   /// The size of the VM snapshot instructions buffer. If
   /// vm_snapshot_instructions is a symbol reference, 0 may be passed here.
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   size_t vm_snapshot_instructions_size;
   /// The isolate snapshot data buffer used in AOT operation. This buffer must
   /// be mapped in as read-only. For more information refer to the documentation
   /// on the Wiki at
   /// https://github.com/flutter/flutter/wiki/Flutter-engine-operation-in-AOT-Mode
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   const uint8_t* isolate_snapshot_data;
   /// The size of the isolate snapshot data buffer.  If isolate_snapshot_data is
   /// a symbol reference, 0 may be passed here.
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   size_t isolate_snapshot_data_size;
   /// The isolate snapshot instructions buffer used in AOT operation. This
   /// buffer must be mapped in as read-execute. For more information refer to
   /// the documentation on the Wiki at
   /// https://github.com/flutter/flutter/wiki/Flutter-engine-operation-in-AOT-Mode
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   const uint8_t* isolate_snapshot_instructions;
   /// The size of the isolate snapshot instructions buffer. If
   /// isolate_snapshot_instructions is a symbol reference, 0 may be passed here.
+  /// @deprecated This API will be deprecated. Please use `snapshot_path`
+  /// instead.
   size_t isolate_snapshot_instructions_size;
   /// The callback invoked by the engine in root isolate scope. Called
   /// immediately after the root isolate has been created and marked runnable.

@@ -77,7 +77,7 @@ EmbedderConfigBuilder::EmbedderConfigBuilder(
 
   if (preference == InitializationPreference::kInitialize) {
     SetAssetsPath();
-    SetSnapshots();
+    SetSnapshotsPath();
     SetIsolateCreateCallbackHook();
     SetSemanticsCallbackHooks();
     AddCommandLineArgument("--disable-observatory");
@@ -110,26 +110,8 @@ void EmbedderConfigBuilder::SetAssetsPath() {
   project_args_.assets_path = context_.GetAssetsPath().c_str();
 }
 
-void EmbedderConfigBuilder::SetSnapshots() {
-  if (auto mapping = context_.GetVMSnapshotData()) {
-    project_args_.vm_snapshot_data = mapping->GetMapping();
-    project_args_.vm_snapshot_data_size = mapping->GetSize();
-  }
-
-  if (auto mapping = context_.GetVMSnapshotInstructions()) {
-    project_args_.vm_snapshot_instructions = mapping->GetMapping();
-    project_args_.vm_snapshot_instructions_size = mapping->GetSize();
-  }
-
-  if (auto mapping = context_.GetIsolateSnapshotData()) {
-    project_args_.isolate_snapshot_data = mapping->GetMapping();
-    project_args_.isolate_snapshot_data_size = mapping->GetSize();
-  }
-
-  if (auto mapping = context_.GetIsolateSnapshotInstructions()) {
-    project_args_.isolate_snapshot_instructions = mapping->GetMapping();
-    project_args_.isolate_snapshot_instructions_size = mapping->GetSize();
-  }
+void EmbedderConfigBuilder::SetSnapshotsPath() {
+  project_args_.snapshot_path = context_.GetSnapshotPath().c_str();
 }
 
 void EmbedderConfigBuilder::SetIsolateCreateCallbackHook() {

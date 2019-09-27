@@ -59,15 +59,16 @@ struct Settings {
   ~Settings();
 
   // VM settings
+  std::string snapshot_path;
   std::string vm_snapshot_data_path;  // deprecated
-  MappingCallback vm_snapshot_data;
+  MappingCallback vm_snapshot_data;  // deprecated
   std::string vm_snapshot_instr_path;  // deprecated
-  MappingCallback vm_snapshot_instr;
+  MappingCallback vm_snapshot_instr;  // deprecated
 
   std::string isolate_snapshot_data_path;  // deprecated
-  MappingCallback isolate_snapshot_data;
+  MappingCallback isolate_snapshot_data;  // deprecated
   std::string isolate_snapshot_instr_path;  // deprecated
-  MappingCallback isolate_snapshot_instr;
+  MappingCallback isolate_snapshot_instr;  // deprecated
 
   // Returns the Mapping to a kernel buffer which contains sources for dart:*
   // libraries.

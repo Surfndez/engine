@@ -16,16 +16,9 @@ EmbedderTestContext::EmbedderTestContext(std::string assets_path)
       native_resolver_(std::make_shared<TestDartNativeResolver>()) {
   auto assets_dir = fml::OpenDirectory(assets_path_.c_str(), false,
                                        fml::FilePermission::kRead);
-  vm_snapshot_data_ =
-      fml::FileMapping::CreateReadOnly(assets_dir, "vm_snapshot_data");
-  isolate_snapshot_data_ =
-      fml::FileMapping::CreateReadOnly(assets_dir, "isolate_snapshot_data");
 
   if (flutter::DartVM::IsRunningPrecompiledCode()) {
-    vm_snapshot_instructions_ =
-        fml::FileMapping::CreateReadExecute(assets_dir, "vm_snapshot_instr");
-    isolate_snapshot_instructions_ = fml::FileMapping::CreateReadExecute(
-        assets_dir, "isolate_snapshot_instr");
+    snapshot_path_ = assets_path_ + "/binary.so";
   }
 
   isolate_create_callbacks_.push_back(
@@ -43,21 +36,8 @@ const std::string& EmbedderTestContext::GetAssetsPath() const {
   return assets_path_;
 }
 
-const fml::Mapping* EmbedderTestContext::GetVMSnapshotData() const {
-  return vm_snapshot_data_.get();
-}
-
-const fml::Mapping* EmbedderTestContext::GetVMSnapshotInstructions() const {
-  return vm_snapshot_instructions_.get();
-}
-
-const fml::Mapping* EmbedderTestContext::GetIsolateSnapshotData() const {
-  return isolate_snapshot_data_.get();
-}
-
-const fml::Mapping* EmbedderTestContext::GetIsolateSnapshotInstructions()
-    const {
-  return isolate_snapshot_instructions_.get();
+const std::string& EmbedderTestContext::GetSnapshotPath() const {
+  return snapshot_path_;
 }
 
 void EmbedderTestContext::SetRootSurfaceTransformation(SkMatrix matrix) {

@@ -49,7 +49,7 @@ class EmbedderConfigBuilder {
 
   void SetAssetsPath();
 
-  void SetSnapshots();
+  void SetSnapshotsPath();
 
   void SetIsolateCreateCallbackHook();
 

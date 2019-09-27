@@ -512,6 +512,12 @@ struct _FlutterPlatformMessageResponseHandle {
 
 void PopulateSnapshotMappingCallbacks(const FlutterProjectArgs* args,
                                       flutter::Settings& settings) {
+  if (args->snapshot_path != nullptr) {
+    settings.application_library_path.emplace_back(args->snapshot_path);
+    // Mapping callbacks or file paths for snapshot pieces should be ignored.
+    return;
+  }
+
   // There are no ownership concerns here as all mappings are owned by the
   // embedder and not the engine.
   auto make_mapping_callback = [](const uint8_t* mapping, size_t size) {
